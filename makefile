@@ -1,4 +1,4 @@
-TARGET   = Tinait
+TARGET   = tinait
 CPP      = g++
 CPPFLAGS = -std=c++0x -Wall
 LINKER   = g++
@@ -16,6 +16,7 @@ bin/$(TARGET): $(OBJ)
 	@echo "Linking complete"
 
 $(OBJ): obj/%.o : src/%.cpp
+	@mkdir -p obj
 	@$(CPP) $(CPPFLAGS) -c $< -o $@
 	@echo "Compiled "$<" successfully"
 

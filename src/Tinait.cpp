@@ -1,3 +1,4 @@
+#include <cstdio> // per https://stackoverflow.com/questions/28008167/errors-when-trying-to-build-in-cygwin
 #include <readline/readline.h>
 #include <readline/history.h>
 
