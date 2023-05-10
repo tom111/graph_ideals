@@ -21,7 +21,9 @@ private:
 	std::vector<unsigned> column_widths;
 
 public:
-	DatabaseInterface() {}
+	DatabaseInterface() {
+	    database = nullptr;
+	}
 
 	DatabaseInterface(const char * database_file_name) : number_columns(0), number_rows(0), view_columns{}, view_contents{}, column_widths{} {
 		if (sqlite3_open(database_file_name, &database))
@@ -32,15 +34,21 @@ public:
 	}
 
 	DatabaseInterface& operator=(DatabaseInterface && dbi) {
-		sqlite3_close_v2(database);
+	    if (this != &dbi) {
+		if (database) {
+		    sqlite3_close_v2(database);
+		}
 		database = dbi.database;
-		dbi.database = 0;
+		dbi.database = nullptr;
 		reset_view();
-		return *this;
+	    }
+	    return *this;
 	}
 
 	~DatabaseInterface() {
+	    if (database) {
 		sqlite3_close_v2(database);
+	    }
 	}
 
 	void reset_view();
